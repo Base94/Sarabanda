@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gioco di Riconoscimento dei Volti</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    img { max-width: 300px; }
+    #game { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Gioco di Riconoscimento dei Volti</h1>
+  <button id="startButton">Inizia il gioco</button>
+  
+  <div id="game">
+    <img id="photo" src="" alt="Foto del personaggio">
+    <br><br>
+    <input type="text" id="guess" placeholder="Indovina il nome">
+    <button id="submitGuess">Invia</button>
+    <p id="result"></p>
+    <p>Punteggio: <span id="score">0</span></p>
+  </div>
+
+  <script>
+    const images = [
+      { name: "personaggio1", src: "url-della-tua-immagine-1" },
+      { name: "personaggio2", src: "url-della-tua-immagine-2" },
+      // Aggiungi altre immagini qui
+    ];
+    
+    let currentImageIndex = 0;
+    let score = 0;
+    
+    document.getElementById("startButton").addEventListener("click", () => {
+      document.getElementById("game").style.display = "block";
+      showNextImage();
+    });
+
+    document.getElementById("submitGuess").addEventListener("click", () => {
+      const guess = document.getElementById("guess").value.toLowerCase();
+      if (guess === images[currentImageIndex].name.toLowerCase()) {
+        score++;
+        document.getElementById("result").textContent = "Corretto!";
+      } else {
+        document.getElementById("result").textContent = "Sbagliato!";
+      }
+      document.getElementById("score").textContent = score;
+      showNextImage();
+    });
+
+    function showNextImage() {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      document.getElementById("photo").src = images[currentImageIndex].src;
+      document.getElementById("guess").value = "";
+    }
+  </script>
+</body>
+</html>
